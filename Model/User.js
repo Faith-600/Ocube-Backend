@@ -5,7 +5,9 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true, match: /^[a-zA-Z\s]{2,50}$/ },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  phonenumber:{type:String,required:true}
+  phonenumber:{type:String,required:true},
+  isVerified: { type: Boolean, default: false },
+  verificationToken: { type: String, default: '' },
 }, { timestamps: true });
 
 
