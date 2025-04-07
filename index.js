@@ -5,7 +5,8 @@ import dotenv from 'dotenv';
 import User from './Model/User.js';
 import session from 'express-session'
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer';
+import bcrypt from 'bcrypt';
 
 
 
@@ -65,8 +66,8 @@ mongoose.connect(mongoUrl,{
 
 
       // app.get('/',(req,res)=>{
-      //   if(req.session.name){
-      // return res.json({valid:true,name:req.session.name})
+      //   if(req.session.email){
+      // return res.json({valid:true,email:req.session.email})
       //   }else{
       //     return res.json({valid:false})
       //   }
@@ -86,6 +87,15 @@ mongoose.connect(mongoUrl,{
       //  POSTING USERS 
 app.post('/users', async (req, res) => {
     const { name, email, password,phonenumber } = req.body;
+
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+
+    if (!passwordPattern.test(password)) {
+         return res.status(400).json({
+        error: 'Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.',
+      });
+    }
   
     if (!name || !email || !password|| !phonenumber) {
       return res.status(400).json({ message: "Missing required fields" });
@@ -173,9 +183,10 @@ app.post('/login', async (req, res) => {
       const isValid = await bcrypt.compare(req.body.password, user.password);
       if (!isValid) return res.json({ Login: false });
   
-      req.session.name = user.name;
+  
       res.json({ Login: true, user });
     } catch (err) {
+      console.error(err)
       res.status(500).json({ message: 'Error inside server' });
     }
   });
