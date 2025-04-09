@@ -6,7 +6,7 @@ import User from './Model/User.js';
 import session from 'express-session'
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 
 
 
@@ -86,6 +86,7 @@ mongoose.connect(mongoUrl,{
 
       //  POSTING USERS 
 app.post('/users', async (req, res) => {
+  console.log(req.body); 
     const { name, email, password,phonenumber } = req.body;
 
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
@@ -180,7 +181,7 @@ app.post('/login', async (req, res) => {
       const user = await User.findOne({ email: req.body.email });
       if (!user) return res.json({ Login: false });
   
-      const isValid = await bcrypt.compare(req.body.password, user.password);
+      const isValid = await bcryptjs.compare(req.body.password, user.password);
       if (!isValid) return res.json({ Login: false });
   
   
