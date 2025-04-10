@@ -7,7 +7,7 @@ import session from 'express-session'
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import bcryptjs from 'bcryptjs';
-
+import MongoStore from 'connect-mongo';
 
 
 
@@ -19,13 +19,20 @@ app.use(cors())
 
 
 app.use(
-    session({
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: true,
-      cookie: { secure: false }, 
-    })
-  );
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false, 
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      ttl: 14 * 24 * 60 * 60, 
+    }),
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 1000 * 60 * 60 * 24 * 7, 
+    },
+  })
+);
 
 const mongoUrl = process.env.MONGO_URL;
 const port =process.env.PORT || 3001;
