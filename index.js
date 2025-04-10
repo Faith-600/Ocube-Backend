@@ -18,13 +18,21 @@ app.use(express.json());
 app.use(cors())
 
 
+
+const mongoUrl = process.env.MONGO_URL;
+const port =process.env.PORT || 3001;
+const jwtSecret = process.env.JWT_SECRET;
+const emailUser = process.env.EMAIL_USER;
+const emailPass =  process.env.EMAIL_PASS
+
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false, 
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URL,
+      mongoUrl,
       ttl: 14 * 24 * 60 * 60, 
     }),
     cookie: {
@@ -34,11 +42,7 @@ app.use(
   })
 );
 
-const mongoUrl = process.env.MONGO_URL;
-const port =process.env.PORT || 3001;
-const jwtSecret = process.env.JWT_SECRET;
-const emailUser = process.env.EMAIL_USER;
-const emailPass =  process.env.EMAIL_PASS
+
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
