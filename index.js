@@ -110,7 +110,7 @@ app.post('/users', async (req, res) => {
     }
   
     if (!name || !email || !password|| !phonenumber) {
-      return res.status(400).json({ message: "Missing required fields" });
+      return res.json({ message: "Missing required fields" });
     }
   
     try {
