@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import bcryptjs from 'bcryptjs';
 import MongoStore from 'connect-mongo';
+import { courses } from './courses.js'; 
 
 
 
@@ -24,6 +25,8 @@ const port =process.env.PORT || 3001;
 const jwtSecret = process.env.JWT_SECRET;
 const emailUser = process.env.EMAIL_USER;
 const emailPass =  process.env.EMAIL_PASS
+
+
 
 
 app.use(
@@ -76,13 +79,20 @@ mongoose.connect(mongoUrl,{
       });
 
 
-      // app.get('/',(req,res)=>{
-      //   if(req.session.email){
-      // return res.json({valid:true,email:req.session.email})
-      //   }else{
-      //     return res.json({valid:false})
-      //   }
-      // })  
+// COURESES API
+      app.get('/api/courses', (req, res) => {
+        res.json(courses);
+      });
+      
+      app.get('/api/courses/:id', (req, res) => {
+        const course = courses.find(c => c.id == req.params.id);
+        if (course) {
+          res.json(course);
+        } else {
+          res.status(404).json({ message: 'Course not found' });
+        }
+      });
+   
       
       app.post('/logout', (req, res) => {
         req.session.destroy((err) => {
@@ -95,8 +105,8 @@ mongoose.connect(mongoUrl,{
       });
 
 
-      //  POSTING USERS 
-app.post('/users', async (req, res) => {
+      //  SIGN UP  
+app.post('/signup', async (req, res) => {
   console.log(req.body); 
     const { name, email, password,phonenumber } = req.body;
 
@@ -110,7 +120,7 @@ app.post('/users', async (req, res) => {
     }
   
     if (!name || !email || !password|| !phonenumber) {
-      return res.json({ message: "Missing required fields" });
+      return res.status(400).json({ message: "Missing required fields" });
     }
   
     try {
