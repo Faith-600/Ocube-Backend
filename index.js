@@ -9,6 +9,8 @@ import nodemailer from 'nodemailer';
 import bcryptjs from 'bcryptjs';
 import MongoStore from 'connect-mongo';
 import { courses } from './courses.js'; 
+import multer from 'multer';
+import {V2 as cloudinary} from 'cloudinary'
 
 
 
@@ -26,7 +28,13 @@ const jwtSecret = process.env.JWT_SECRET;
 const emailUser = process.env.EMAIL_USER;
 const emailPass =  process.env.EMAIL_PASS
 
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET 
+});
 
+const upload = multer({ dest: 'uploads/' });
 
 
 app.use(
@@ -188,6 +196,10 @@ app.get('/verify-email/:token', async (req, res) => {
     await user.save();
   
     // res.send('<h1>Email verified successfully!</h1>');
+//     const frontendLoginUrl = 'http://localhost:5173/login?verified=true'; // Change this to your actual frontend URL
+
+// // Redirect the user's browser to that page
+// res.redirect(frontendLoginUrl);
     res.status(200).json({ message: "Email verified successfully!" });
   } catch (err) {
     res.status(400).json({ message: "Invalid or expired token" });
@@ -198,20 +210,122 @@ app.get('/verify-email/:token', async (req, res) => {
 
   // LOGINS 
 app.post('/login', async (req, res) => {
-    try {
-      const user = await User.findOne({ email: req.body.email });
-      if (!user) return res.json({ Login: false });
-  
-      const isValid = await bcryptjs.compare(req.body.password, user.password);
-      if (!isValid) return res.json({ Login: false });
-  
-  
-      res.json({ Login: true, user });
-    } catch (err) {
-      console.error(err)
-      res.status(500).json({ message: 'Error inside server' });
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(401).json({ login: false, message: "Invalid credentials" });
     }
-  });
+    if (!user.isVerified) {
+      return res.status(403).json({ login: false, message: "Please verify your email before logging in." });
+    }
+
+    const isValid = await bcryptjs.compare(req.body.password, user.password);
+    if (!isValid) {
+      return res.status(401).json({ login: false, message: "Invalid credentials" });
+    }
+
+    req.session.userId = user._id;
+
+    const userProfile = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phonenumber: user.phonenumber
+    };
+
+    res.status(200).json({ login: true, user: userProfile });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+const isAuthenticated = (req, res, next) => {
+  if (req.session.userId) {
+    return next(); 
+  }
+  res.status(401).json({ message: 'Unauthorized: You must be logged in.' });
+};
+
+
+app.get('/api/profile/me', isAuthenticated, async (req, res) => {
+  try {
+    const userId = req.session.userId;
+
+    const userProfile = await User.findById(userId).select('-password -verificationToken');
+
+    if (!userProfile) {
+      return res.status(404).json({ message: 'User profile not found.' });
+    }
+
+    res.status(200).json(userProfile);
+
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.put('/api/profile/me', isAuthenticated, async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    
+    const { name, phonenumber } = req.body;
+
+    const updates = {};
+    if (name) updates.name = name;
+    if (phonenumber) updates.phonenumber = phonenumber;
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true })
+          .select('-password -verificationToken');
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    res.status(200).json({ message: 'Profile updated successfully', user: updatedUser });
+
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+app.put('/api/profile/picture', isAuthenticated, upload.single('profilePicture'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded.' });
+    }
+
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'profile_pictures', 
+      gravity: 'face',
+      crop: 'fill'
+    });
+
+    const profilePictureUrl = result.secure_url;
+    const userId = req.session.userId;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { profilePictureUrl: profilePictureUrl },
+      { new: true }
+    ).select('-password -verificationToken');
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    res.status(200).json({ message: 'Profile picture updated successfully', user: updatedUser });
+
+  } catch (error) {
+    console.error('Error updating profile picture:', error);
+    res.status(500).json({ message: 'Server error while updating picture.' });
+  }
+});
 
 
   export default app;

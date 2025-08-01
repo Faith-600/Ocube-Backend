@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   phonenumber:{type:String,required:true},
   isVerified: { type: Boolean, default: false },
-  verificationToken: { type: String, default: '' },
+  verificationToken: { type: String},
+   profilePictureUrl: { type: String, default: '' } 
 }, { timestamps: true });
 
 
