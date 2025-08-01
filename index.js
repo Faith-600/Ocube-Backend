@@ -85,6 +85,39 @@ mongoose.connect(mongoUrl,{
         res.json({ message: 'Hello from the serverless function!' });
       });
 
+      
+  // LOGINS 
+app.post('/login', async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(401).json({ login: false, message: "Invalid credentials" });
+    }
+    if (!user.isVerified) {
+      return res.status(403).json({ login: false, message: "Please verify your email before logging in." });
+    }
+
+    const isValid = await bcryptjs.compare(req.body.password, user.password);
+    if (!isValid) {
+      return res.status(401).json({ login: false, message: "Invalid credentials" });
+    }
+
+    req.session.userId = user._id;
+
+    const userProfile = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phonenumber: user.phonenumber
+    };
+
+    res.status(200).json({ login: true, user: userProfile });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 // COURESES API
       app.get('/api/courses', (req, res) => {
@@ -203,42 +236,6 @@ app.get('/verify-email/:token', async (req, res) => {
   } catch (err) {
  res.status(400).send('<h1>Error</h1><p>This verification link is invalid or has expired.</p>');  }
 });
-
-
-
-  // LOGINS 
-app.post('/login', async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) {
-      return res.status(401).json({ login: false, message: "Invalid credentials" });
-    }
-    if (!user.isVerified) {
-      return res.status(403).json({ login: false, message: "Please verify your email before logging in." });
-    }
-
-    const isValid = await bcryptjs.compare(req.body.password, user.password);
-    if (!isValid) {
-      return res.status(401).json({ login: false, message: "Invalid credentials" });
-    }
-
-    req.session.userId = user._id;
-
-    const userProfile = {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      phonenumber: user.phonenumber
-    };
-
-    res.status(200).json({ login: true, user: userProfile });
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
 
 const isAuthenticated = (req, res, next) => {
   if (req.session.userId) {
