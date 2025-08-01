@@ -34,8 +34,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET 
 });
 
-const upload = multer({ dest: 'uploads/' });
-
+const upload = multer({ storage: multer.memoryStorage() });
 
 app.use(
   session({
@@ -300,12 +299,27 @@ app.put('/api/profile/picture', isAuthenticated, upload.single('profilePicture')
       return res.status(400).json({ message: 'No file uploaded.' });
     }
 
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: 'profile_pictures', 
-      gravity: 'face',
-      crop: 'fill'
-    });
+    const uploadToCloudinary = () => {
+      return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          { 
+            folder: 'profile_pictures', 
+            resource_type: 'image'
+          },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            }
+          }
+        );
+        uploadStream.end(req.file.buffer);
+      });
+    };
 
+    const result = await uploadToCloudinary();
+    
     const profilePictureUrl = result.secure_url;
     const userId = req.session.userId;
 
@@ -318,7 +332,6 @@ app.put('/api/profile/picture', isAuthenticated, upload.single('profilePicture')
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found.' });
     }
-
     res.status(200).json({ message: 'Profile picture updated successfully', user: updatedUser });
 
   } catch (error) {
@@ -326,7 +339,6 @@ app.put('/api/profile/picture', isAuthenticated, upload.single('profilePicture')
     res.status(500).json({ message: 'Server error while updating picture.' });
   }
 });
-
 
   export default app;
 
