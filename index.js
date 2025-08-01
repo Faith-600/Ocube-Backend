@@ -10,7 +10,7 @@ import bcryptjs from 'bcryptjs';
 import MongoStore from 'connect-mongo';
 import { courses } from './courses.js'; 
 import multer from 'multer';
-import {V2 as cloudinary} from 'cloudinary'
+import {v2 as cloudinary} from 'cloudinary'
 
 
 
