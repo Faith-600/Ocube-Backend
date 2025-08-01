@@ -147,7 +147,7 @@ app.post('/signup', async (req, res) => {
       await newUser.save();
 
 
-      const verificationUrl = `http://localhost:3001/verify-email/${token}`;
+      const verificationUrl = `https://ocube-backend.vercel.app/verify-email/${token}`;
       const transporter = nodemailer.createTransport({
         service: 'gmail', 
         auth: {
@@ -186,7 +186,7 @@ app.get('/verify-email/:token', async (req, res) => {
     }
 
     if (user.isVerified) {
-      return res.status(400).json({ message: "Email already verified" });
+ return res.status(400).send('<h1>Already Verified</h1><p>This email address has already been verified.</p>');
     }
 
     // Set the user as verified
@@ -199,10 +199,9 @@ app.get('/verify-email/:token', async (req, res) => {
 
 // // Redirect the user's browser to that page
 // res.redirect(frontendLoginUrl);
-    res.status(200).json({ message: "Email verified successfully!" });
+ res.status(200).send('<h1>Success!</h1><p>Your email has been verified. You can now close this tab and log in to the application.</p>');
   } catch (err) {
-    res.status(400).json({ message: "Invalid or expired token" });
-  }
+ res.status(400).send('<h1>Error</h1><p>This verification link is invalid or has expired.</p>');  }
 });
 
 
