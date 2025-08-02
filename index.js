@@ -94,6 +94,28 @@ mongoose.connect(mongoUrl,{
       });
 
 
+      // Add this temporary route for debugging purposes.
+app.post('/api/debug-body', (req, res) => {
+  // This will log everything to your Vercel logs.
+  console.log('--- DEBUGGING /api/debug-body ---');
+  console.log('Request Headers:', req.headers);
+  console.log('Request Body:', req.body);
+  console.log('---------------------------------');
+
+  // This sends a response back to Postman.
+  if (req.body && Object.keys(req.body).length > 0) {
+    res.status(200).json({
+      message: "SUCCESS: Your server received and parsed the JSON body.",
+      bodyReceived: req.body
+    });
+  } else {
+    res.status(400).json({
+      message: "FAILURE: req.body was undefined or empty. The express.json() middleware did not run correctly.",
+      headersTheServerSaw: req.headers // This will show us the headers that actually arrived.
+    });
+  }
+});
+
 // COURESES API
       app.get('/api/courses', (req, res) => {
         res.json(courses);
