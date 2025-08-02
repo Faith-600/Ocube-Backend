@@ -17,10 +17,15 @@ import {v2 as cloudinary} from 'cloudinary'
 dotenv.config();
 const app = express();
 
+app.set('trust proxy', 1); 
+
+app.use(cors({
+    origin: true, 
+    credentials: true 
+}));
+
 app.use(express.json());
-app.use(cors())
-
-
+app.use(express.urlencoded({ extended: true }));
 
 const mongoUrl = process.env.MONGO_URL;
 const port =process.env.PORT || 3001;
@@ -46,10 +51,13 @@ app.use(
       ttl: 14 * 24 * 60 * 60, 
     }),
     cookie: {
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 1000 * 60 * 60 * 24 * 7, 
+      secure: true,
+      httpOnly:true,
+      sameSite:"none",
+      maxAge: 1000 * 60 * 60 * 24 * 7
+      
     },
-  })
+  }),
 );
 
 
