@@ -10,7 +10,8 @@ import bcryptjs from 'bcryptjs';
 import MongoStore from 'connect-mongo';
 import { courses } from './courses.js'; 
 import multer from 'multer';
-import {v2 as cloudinary} from 'cloudinary'
+import {v2 as cloudinary} from 'cloudinary';
+import { body,validationResult } from 'express-validator';
 
 
 
@@ -275,7 +276,24 @@ app.get('/api/profile/me', isAuthenticated, async (req, res) => {
   }
 });
 
-app.put('/api/profile/me', isAuthenticated, async (req, res) => {
+app.put('/api/profile/me', isAuthenticated,
+  [
+     body('name')
+      .optional()
+      .trim() 
+      .notEmpty().withMessage('Name cannot be empty.'), 
+    
+    body('phonenumber')
+      .optional()
+      .trim()
+      .isMobilePhone('any', { strictMode: false }).withMessage('Must be a valid phone number.') 
+  ],
+
+  async (req, res) => {
+      const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() }); 
+    }
   try {
     const userId = req.session.userId;
     
@@ -284,6 +302,10 @@ app.put('/api/profile/me', isAuthenticated, async (req, res) => {
     const updates = {};
     if (name) updates.name = name;
     if (phonenumber) updates.phonenumber = phonenumber;
+
+      if (Object.keys(updates).length === 0) {
+        return res.status(400).json({ message: 'No update data provided.' });
+      }
 
     const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true })
           .select('-password -verificationToken');
