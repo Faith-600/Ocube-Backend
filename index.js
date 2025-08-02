@@ -25,6 +25,8 @@ app.use(cors({
     credentials: true 
 }));
 
+app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 
 const mongoUrl = process.env.MONGO_URL;
@@ -67,7 +69,6 @@ const transporter = nodemailer.createTransport({
   auth: { user: emailUser, pass: emailPass },
 });
 
-// Verify the SMTP connection when the server starts
 transporter.verify((error, success) => {
   if (error) {
     console.error('SMTP connection error:', error);
