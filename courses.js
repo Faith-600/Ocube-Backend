@@ -6,7 +6,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "6",
       "instructor": "DesignCourse",
-      "link": "https://www.youtube.com/watch?v=jwCmIBJ8Jtc"
+      "link": "https://www.youtube.com/watch?v=jwCmIBJ8Jtc",
+      "imageUrl": "https://images.pexels.com/photos/326503/pexels-photo-326503.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 2,
@@ -15,7 +16,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "2",
       "instructor": "Programming with Mosh",
-      "link": "https://www.youtube.com/watch?v=qz0aGYrrlhU"
+      "link": "https://www.youtube.com/watch?v=qz0aGYrrlhU",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg"
     },
     {
       "id": 3,
@@ -24,7 +26,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "1.5",
       "instructor": "Traversy Media",
-      "link": "https://www.youtube.com/watch?v=yfoY53QXEnI"
+      "link": "https://www.youtube.com/watch?v=yfoY53QXEnI",
+      "imageUrl": "https://images.pexels.com/photos/11035386/pexels-photo-11035386.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 4,
@@ -33,7 +36,8 @@ export const courses = [
       "level": "Intermediate",
       "duration": "3",
       "instructor": "FreeCodeCamp",
-      "link": "https://www.youtube.com/watch?v=PkZNo7MFNFg"
+      "link": "https://www.youtube.com/watch?v=PkZNo7MFNFg",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg"
     },
     {
       "id": 5,
@@ -42,7 +46,8 @@ export const courses = [
       "level": "Intermediate",
       "duration": "2.5",
       "instructor": "Traversy Media",
-      "link": "https://www.youtube.com/watch?v=w7ejDZ8SWv8"
+      "link": "https://www.youtube.com/watch?v=w7ejDZ8SWv8",
+      "imageUrl": "https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 6,
@@ -51,7 +56,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "12",
       "instructor": "FreeCodeCamp",
-      "link": "https://www.freecodecamp.org/learn/2022/responsive-web-design/"
+      "link": "https://www.freecodecamp.org/learn/2022/responsive-web-design/",
+      "imageUrl": "https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 7,
@@ -60,7 +66,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "1.5",
       "instructor": "Product School",
-      "link": "https://www.youtube.com/watch?v=Ov1K1uuO8I4"
+      "link": "https://www.youtube.com/watch?v=Ov1K1uuO8I4",
+      "imageUrl": "https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 8,
@@ -69,7 +76,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "2",
       "instructor": "edureka!",
-      "link": "https://www.youtube.com/watch?v=9TycLR0TqFA"
+      "link": "https://www.youtube.com/watch?v=9TycLR0TqFA",
+      "imageUrl": "https://images.pexels.com/photos/3184431/pexels-photo-3184431.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 9,
@@ -78,7 +86,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "1.5",
       "instructor": "FreeCodeCamp",
-      "link": "https://www.youtube.com/watch?v=RGOj5yH7evk"
+      "link": "https://www.youtube.com/watch?v=RGOj5yH7evk",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
     },
     {
       "id": 10,
@@ -87,7 +96,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "4",
       "instructor": "Programming with Mosh",
-      "link": "https://www.youtube.com/watch?v=_uQrJ0TkZlc"
+      "link": "https://www.youtube.com/watch?v=_uQrJ0TkZlc",
+      "imageUrl": "https://images.pexels.com/photos/1181373/pexels-photo-1181373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 11,
@@ -96,7 +106,8 @@ export const courses = [
       "level": "Intermediate",
       "duration": "2",
       "instructor": "Traversy Media",
-      "link": "https://www.youtube.com/watch?v=fBNz5xF-Kx4"
+      "link": "https://www.youtube.com/watch?v=fBNz5xF-Kx4",
+      "imageUrl": "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 12,
@@ -105,7 +116,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "2",
       "instructor": "Programming with Mosh",
-      "link": "https://www.youtube.com/watch?v=ofme2o29ngU"
+      "link": "https://www.youtube.com/watch?v=ofme2o29ngU",
+      "imageUrl": "https://cdn.worldvectorlogo.com/logos/mongodb-icon-1.svg"
     },
     {
       "id": 13,
@@ -114,7 +126,8 @@ export const courses = [
       "level": "Advanced",
       "duration": "7",
       "instructor": "JavaScript Mastery",
-      "link": "https://www.youtube.com/watch?v=4ZBuQ2jCZjU"
+      "link": "https://www.youtube.com/watch?v=4ZBuQ2jCZjU",
+      "imageUrl": "https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 14,
@@ -123,7 +136,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "1.5",
       "instructor": "AJ&Smart",
-      "link": "https://www.youtube.com/watch?v=Ovj4hFxko7c"
+      "link": "https://www.youtube.com/watch?v=Ovj4hFxko7c",
+      "imageUrl": "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 15,
@@ -132,7 +146,8 @@ export const courses = [
       "level": "Advanced",
       "duration": "2",
       "instructor": "Gaurav Sen",
-      "link": "https://www.youtube.com/watch?v=xpDnVSmNFX0"
+      "link": "https://www.youtube.com/watch?v=xpDnVSmNFX0",
+      "imageUrl": "https://images.pexels.com/photos/3861964/pexels-photo-3861964.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 16,
@@ -141,7 +156,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "3",
       "instructor": "Simplilearn",
-      "link": "https://www.youtube.com/watch?v=inWWhr5tnEA"
+      "link": "https://www.youtube.com/watch?v=inWWhr5tnEA",
+      "imageUrl": "https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 17,
@@ -150,7 +166,8 @@ export const courses = [
       "level": "Intermediate",
       "duration": "3.5",
       "instructor": "Simplilearn",
-      "link": "https://www.youtube.com/watch?v=3Kq1MIfTWCE"
+      "link": "https://www.youtube.com/watch?v=3Kq1MIfTWCE",
+      "imageUrl": "https://images.pexels.com/photos/5380642/pexels-photo-5380642.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 18,
@@ -159,7 +176,8 @@ export const courses = [
       "level": "Intermediate",
       "duration": "4",
       "instructor": "FreeCodeCamp",
-      "link": "https://www.youtube.com/watch?v=GJoBWM1UU2s"
+      "link": "https://www.youtube.com/watch?v=GJoBWM1UU2s",
+      "imageUrl": "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 19,
@@ -168,7 +186,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "4",
       "instructor": "FreeCodeCamp",
-      "link": "https://www.youtube.com/watch?v=HXV3zeQKqGY"
+      "link": "https://www.youtube.com/watch?v=HXV3zeQKqGY",
+      "imageUrl": "https://images.pexels.com/photos/11035365/pexels-photo-11035365.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 20,
@@ -177,7 +196,8 @@ export const courses = [
       "level": "Intermediate",
       "duration": "3",
       "instructor": "FreeCodeCamp",
-      "link": "https://www.youtube.com/watch?v=F9UC9DY-vIU"
+      "link": "https://www.youtube.com/watch?v=F9UC9DY-vIU",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/06/Kotlin_Icon.svg"
     },
     {
       "id": 21,
@@ -186,7 +206,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "2",
       "instructor": "CodeWithChris",
-      "link": "https://www.youtube.com/watch?v=VPvVD8t02U8"
+      "link": "https://www.youtube.com/watch?v=VPvVD8t02U8",
+      "imageUrl": "https://images.pexels.com/photos/1092671/pexels-photo-1092671.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 22,
@@ -195,7 +216,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "1.5",
       "instructor": "Envato Tuts+",
-      "link": "https://www.youtube.com/watch?v=Gg1hPj5ae8U"
+      "link": "https://www.youtube.com/watch?v=Gg1hPj5ae8U",
+      "imageUrl": "https://images.pexels.com/photos/355948/pexels-photo-355948.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 23,
@@ -204,7 +226,8 @@ export const courses = [
       "level": "Beginner",
       "duration": "2",
       "instructor": "Microsoft",
-      "link": "https://www.youtube.com/watch?v=4KPoy0jRGKk"
+      "link": "https://www.youtube.com/watch?v=4KPoy0jRGKk",
+      "imageUrl": "https://images.pexels.com/photos/669619/pexels-photo-669619.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 24,
@@ -213,7 +236,8 @@ export const courses = [
       "level": "Intermediate",
       "duration": "2.5",
       "instructor": "FreeCodeCamp",
-      "link": "https://www.youtube.com/watch?v=G6n7DaY4KVM"
+      "link": "https://www.youtube.com/watch?v=G6n7DaY4KVM",
+      "imageUrl": "https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       "id": 25,
@@ -222,7 +246,7 @@ export const courses = [
       "level": "Beginner",
       "duration": "2",
       "instructor": "PMP Certification",
-      "link": "https://www.youtube.com/watch?v=yzvM7Kj4H7g"
+      "link": "https://www.youtube.com/watch?v=yzvM7Kj4H7g",
+      "imageUrl": "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     }
   ]
-  
