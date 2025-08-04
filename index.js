@@ -123,7 +123,7 @@ mongoose.connect(mongoUrl,{
 
 
       //  SIGN UP  
-app.post('/signup', async (req, res) => {
+ app.post('/signup', async (req, res) => {
   console.log(req.body); 
     const { name, email, password,phonenumber } = req.body;
 
@@ -199,7 +199,6 @@ app.get('/verify-email/:token', async (req, res) => {
  return res.status(400).send('<h1>Already Verified</h1><p>This email address has already been verified.</p>');
     }
 
-    // Set the user as verified
     user.isVerified = true;
     user.verificationToken = '';  
     await user.save();
@@ -232,7 +231,17 @@ app.post('/login', async (req, res) => {
       return res.status(401).json({ login: false, message: "Invalid credentials" });
     }
 
-    req.session.userId = user._id;
+    // req.session.userId = user._id;
+     const payload = {
+      userId: user._id,
+      name: user.name,
+    };
+
+     const token = jwt.sign(
+      payload,
+      process.env.JWT_SECRET, 
+      { expiresIn: '1d' } 
+    );
 
     const userProfile = {
       _id: user._id,
@@ -241,7 +250,10 @@ app.post('/login', async (req, res) => {
       phonenumber: user.phonenumber
     };
 
-    res.status(200).json({ login: true, user: userProfile });
+    res.status(200).json({ 
+       login: true,
+       token:token, 
+       user: userProfile });
 
   } catch (err) {
     console.error(err);
