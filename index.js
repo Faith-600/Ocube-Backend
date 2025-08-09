@@ -196,7 +196,7 @@ app.get('/verify-email/:token', async (req, res) => {
     }
 
     if (user.isVerified) {
- return res.status(400).send('<h1>Already Verified</h1><p>This email address has already been verified.</p>');
+ return res.status(400).json({ message:"This email address has already been verified."});
     }
 
     user.isVerified = true;
@@ -208,9 +208,45 @@ app.get('/verify-email/:token', async (req, res) => {
 
 // // Redirect the user's browser to that page
 // res.redirect(frontendLoginUrl);
- res.status(200).send('<h1>Success!</h1><p>Your email has been verified. You can now close this tab and log in to the application.</p>');
+ res.status(200).json({message:"Your email has been verified. You can now close this tab and log in to the application." });
   } catch (err) {
- res.status(400).send('<h1>Error</h1><p>This verification link is invalid or has expired.</p>');  }
+ res.status(400).json({message: "This verification link is invalid or has expired."});  
+}
+
+});
+
+
+// Resend verification Link
+
+app.post('/resend-verification', async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: "Email is required." });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(200).json({ message: "If an account with that email exists, a new verification link has been sent." });
+    }
+    
+    if (user.isVerified) {
+      return res.status(400).json({ message: "This account has already been verified." });
+    }
+
+    const newVerificationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+
+    await sendVerificationEmail(user.email, newVerificationToken);
+
+    res.status(200).json({ message: "A new verification link has been sent to your email address." });
+
+  } catch (err) {
+    console.error("Resend verification error:", err);
+    res.status(500).json({ message: "Something went wrong. Please try again later." });
+  }
 });
 
 
