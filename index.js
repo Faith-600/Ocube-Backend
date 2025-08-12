@@ -35,6 +35,7 @@ const jwtSecret = process.env.JWT_SECRET;
 const emailUser = process.env.EMAIL_USER;
 const emailPass =  process.env.EMAIL_PASS
 
+
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
   api_key: process.env.CLOUDINARY_API_KEY, 
@@ -157,7 +158,7 @@ mongoose.connect(mongoUrl,{
       await newUser.save();
 
 
-      const verificationUrl = `https://ocube-backend.vercel.app/verify-email/${token}`;
+      const verificationUrl = `https://ocube-a7tu.vercel.app/verify/${token}`;
       const transporter = nodemailer.createTransport({
         service: 'gmail', 
         auth: {
@@ -196,23 +197,17 @@ app.get('/verify-email/:token', async (req, res) => {
     }
 
     if (user.isVerified) {
- return res.status(400).json({ message:"This email address has already been verified."});
+ return res.status(409).json({ message:"This email address has already been verified."});
     }
 
     user.isVerified = true;
     user.verificationToken = '';  
     await user.save();
-  
-    // res.send('<h1>Email verified successfully!</h1>');
-//     const frontendLoginUrl = 'http://localhost:5173/login?verified=true'; // Change this to your actual frontend URL
 
-// // Redirect the user's browser to that page
-// res.redirect(frontendLoginUrl);
- res.status(200).json({message:"Your email has been verified. You can now close this tab and log in to the application." });
+ res.status(200).json({message:"Your email has been verified. You can now close this tab and log in to the application."});
   } catch (err) {
  res.status(400).json({message: "This verification link is invalid or has expired."});  
 }
-
 });
 
 
