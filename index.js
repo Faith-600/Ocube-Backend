@@ -262,7 +262,7 @@ app.post('/login', async (req, res) => {
       return res.status(401).json({ login: false, message: "Invalid credentials" });
     }
 
-    // req.session.userId = user._id;
+    req.session.userId = user._id;
      const payload = {
       userId: user._id,
       name: user.name,
